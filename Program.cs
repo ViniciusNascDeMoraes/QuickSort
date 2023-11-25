@@ -10,7 +10,7 @@ namespace Quicksort
         {
             var timer = new Stopwatch();
 
-            var textConverted = new List<int>();
+            int[] textConvertedIntoArray;
 
             // Path of the text file with numbers separated by commas
             var PathOfFileWithArrayOfNumbers = "../../../arrayOfNumbers.txt";
@@ -19,16 +19,11 @@ namespace Quicksort
             {
                 var text = reader.ReadToEnd();
 
-                var textDivided = text.Split(",");
-
-                foreach (var item in textDivided)
-                {
-                    textConverted.Add(Convert.ToInt32(item));
-                }
+                textConvertedIntoArray = text.Split(",").Select(item => Convert.ToInt32(item)).ToArray();
             }
 
             timer.Start();
-            Console.WriteLine(QuickSort([.. textConverted]));
+            Console.WriteLine(QuickSort(textConvertedIntoArray));
             timer.Stop();
 
             Console.WriteLine($"Time elapsed: {timer.ElapsedMilliseconds} milliseconds");
@@ -36,24 +31,27 @@ namespace Quicksort
             Console.ReadLine();
         }
 
-        static string QuickSort(int[] arr)
+        static string QuickSort(int[] arrayOfNumbers)
         {
-            if (arr.Length == 1)
+            if (arrayOfNumbers.Length == 1)
             {
-                return arr[0].ToString();
+                return $"{arrayOfNumbers[0]}";
             }
-            else if (arr.Length == 0)
+            else if (arrayOfNumbers.Length == 0)
             {
                 return "";
             }
 
-            var pivot = arr[random.Next(0, arr.Length - 1)];
+            var lowestRandomValue = 0;
+            var highestRandomValue = arrayOfNumbers.Length - 1;
+
+            var pivot = arrayOfNumbers[random.Next(lowestRandomValue, highestRandomValue)];
 
             var left = new List<int>();
             var right = new List<int>();
             var sameAsPivot = new List<int>();
 
-            foreach (var item in arr)
+            foreach (var item in arrayOfNumbers)
             {
                 if (item < pivot)
                 {
@@ -71,12 +69,12 @@ namespace Quicksort
 
             var text = $"{QuickSort([.. left])},{string.Join(",", sameAsPivot)},{QuickSort([.. right])}";
 
-            if (text.StartsWith(Convert.ToChar(",")))
+            if (text.StartsWith(','))
             {
                 text = text[1..];
             }
 
-            if (text.EndsWith(Convert.ToChar(",")))
+            if (text.EndsWith(','))
             {
                 text = text[..^1];
             }
