@@ -12,7 +12,7 @@ namespace Quicksort
 
             var textConverted = new List<int>();
 
-            // Go to this path and put a textfile with numbers separated by commas if desired, example: 1,2,3,4,5
+            // Path of the text file with numbers separated by commas
             var PathOfFileWithArrayOfNumbers = "../../../arrayOfNumbers.txt";
 
             using (var reader = new StreamReader(PathOfFileWithArrayOfNumbers))
